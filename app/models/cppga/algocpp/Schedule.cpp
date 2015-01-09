@@ -380,7 +380,7 @@ total_overlap:
 	}
 
 	if ((float)score / ( Configuration::GetInstance().GetNumberOfCourseClasses() *5) >= 1) {
-	 	cout << "success" << endl;
+	 	//cout << "success" << endl;
 	 	ci = 0;
 	 	int aa = 0;
 	 	
@@ -445,8 +445,8 @@ total_overlap:
              // 	score++;
         }
     }  	 
-    cout << score << "itog"<<endl;
-    cout << ( Configuration::GetInstance().GetNumberOfCourseClasses() *6) << endl;
+    //cout << score << "itog"<<endl;
+   // cout << ( Configuration::GetInstance().GetNumberOfCourseClasses() *6) << endl;
 	// calculate fitess value based on score
 	_fitness = (float)score / ( Configuration::GetInstance().GetNumberOfCourseClasses() *6);// * 5// DAYS_NUM );
 }
