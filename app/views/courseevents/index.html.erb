@@ -1,0 +1,145 @@
+<%if params[:d] == "true"%>
+<div class="page-header"><h1>Расписание
+ 
+<br><small>Генерация нового расписания</small></h1>
+  </div>
+  <% else%>
+ <div class="page-header"><h1>Расписание
+ 
+<br><small>Текущее расписание</small></h1>
+  </div>
+  <%end%>
+      <%h = Hash.new { |h,k| h[k] = []}%>
+ 
+  <%another = Hash.new { |d,c| d[c] = []}%>
+ <!-- 
+<table class="table table-bordered">
+  <thead>
+    <tr>                                                                                                                                                                                                                                                                                                                                                                                                                          
+      <th>ID</th>
+      <th>Roomname</th>
+       <th>Lab</th>
+        <th>meetingtime</th>
+       <th>meetingday</th>
+      <th>courseduration</th>
+       <th>coursename</th>
+        <th>profname</th>
+             <th>groupname</th>
+        <th>cbrcase_id</th> 
+      <th colspan="3"></th>                                                                                               
+    </tr>
+  </thead>
+
+<tbody>  -->
+
+<div id="placeholder"></div>
+ 
+ <!-- <div id: "courseevents">
+ 
+
+     <% @courseevents.each do |courseevent| %>
+      <tr>
+<td><%= courseevent.id %></td>
+        <td><%= courseevent.roomname %></td>
+        <td><%= courseevent.lab %></td>
+        <td><%= courseevent.meetingtime %></td>
+        <td><%= courseevent.meetingday %></td>
+        <td><%= courseevent.courseduration %></td>
+        <td><%= courseevent.coursename %></td>
+        <td><%= courseevent.profname %></td>
+        <td><%= courseevent.groupname %></td>
+        <td><%= courseevent.cbrcase_id %></td>
+        
+  </tr>
+ <% end %>
+ 
+
+  </div> -->
+
+  <%= content_tag :div, class: "courseevents_class", data: {courseevents: @courseevents} do %>
+<% end %>
+<%= content_tag :div, class: "rooms_class", data: {rooms: @rooms} do %>
+<% end %>
+<%= content_tag :div, class: "groups_class", data: {groups: @groups} do %>
+<% end %>
+</tbody>
+</table>
+<br>
+  
+
+<br>
+ 
+<%if params[:d] == "true"%>
+
+<%= link_to "Генерировать новое расписание", root_path(d: true), class: 'btn btn-large btn-default'%>
+<%= link_to "Сохранить в текущее расписание", root_path, class: 'btn btn-large btn-success'%>
+<%else%>
+  
+  <input type='button' id='hideshow' class='btn btn-large btn-primary' value='Корректировать расписание'>
+ 
+ <%= link_to "Генерировать новое расписание", root_path(d: true), class: 'btn btn-large btn-default'%>
+
+ <%end%>
+
+ <br><br>
+ <div id='correction-content' style="display:none">
+<!-- 
+ <div id='proverka' style="display:none">
+<%= link_to "Проверка расписания", root_path, class: 'btn btn-large btn-default'%><br><br>
+</div>
+ --> <button class='btn btn-large btn-success' id='save_gridster_data'>Сохранить расписание</button>
+
+
+ 
+<% @rooms.each do |room| %>
+ <h2> <%= room.name %> </h2> 
+ <table style = "table-layout: fixed; width: 100 %" class = 'table table-hover table-bordered'><thead>
+        <tr>
+        <th>Понедельник</th>
+         <th>Вторник</th>
+          <th>Среда</th>
+         <th>Четверг</th>
+        <th>Пятница</th>
+         <th>Суббота</th>
+        
+   
+      </tr>
+    </thead></table> 
+<!--
+<div class="gridster">
+    <ul> --> 
+      <% @courseevents.each do |courseevent| %>
+
+    <% if courseevent.roomname.include? room.id.to_s %>  
+        <%another[ courseevent.id ] << courseevent.meetingday << courseevent.meetingtime << courseevent.courseduration << courseevent.coursename  <<  courseevent.profname << courseevent.groupname << courseevent.roomname %>
+
+        <%h[courseevent.meetingday] << courseevent.meetingtime %>
+
+        <% p courseevent.roomname%>
+           <% end %>      
+<% end %>
+<!-- </ul> -->
+<% end %> 
+<!-- </div> -->
+ 
+
+<div class = "gridster">
+  <ul>
+ <% for d in 1..6 %>
+   <% for m in 1..12 %>
+          
+      <% if  h[d].include? m   %>
+        <%  another.each do |key, array| %>
+         <% if array.take(2) == [d,m] and array[-1] == "37" %>
+             <li id="<%=key%>" class="gridster-cell" data-row="<%= m %>" data-col="<%= d %>" data-sizex="1" data-sizey="<%= array[2]%>"><b><%=another[key][3]%><br><%=another[key][4]%></b><br>Группы №: <%=another[key][5]%></li>
+ <%end%>
+<%end%>
+       <%else %>
+            <li  id="freeslots" class="gridster-cell" data-row="<%= m %>" data-col="<%= d %>" data-sizex="1" data-sizey="1">
+     <%  end %>
+  
+      <% end %>
+      <% end %>
+    </ul>
+</div> 
+</div> 

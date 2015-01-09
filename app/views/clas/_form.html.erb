@@ -1,0 +1,45 @@
+<%= form_for(@cla) do |f| %>
+  <% if @cla.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger ">
+      <h3>Пожалуйста, исправьте ошибки ниже:</h3>
+
+      <ul>
+      <% @cla.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="form-horizontal col-md-3 col-md-offset-4">
+  <div class="input-form">
+  
+   <div class="form-group">
+    <label>Преподаватель</label><br>
+    <%=  f.select :professor_id, Professor.all.collect {|x| [x.name, x.id]} , {}, { :class => "form-control"}%>
+    <!-- # f.number_field  :professor_id-->
+  </div>
+  <div class="form-group">
+    
+    <label>Дисциплина</label><br>
+    <%=  f.select :course_id, Course.all.collect {|x| [x.name, x.id]},{},{ :class => "form-control"} %>
+   <!-- <%= f.number_field  :course_id %> -->
+  </div>
+  <div class="form-group">
+   <label>Группы</label><br>
+    <%= f.select :group_ids, Group.all.collect {|x| [x.name, x.id]}, {}, :multiple => true ,:class => "form-control" %>
+              
+  </div>
+ <div class="form-group">
+    <label>Продолжительность</label><br>
+    <%= f.number_field :duration ,class: "form-control" %>
+  </div>
+   <div class="form-group">
+     <label>Лабораторная</label><br>
+    <%= f.check_box :lab ,class: "form-control"%>
+  </div>
+  <div class="actions">
+    <%= f.submit "Сохранить", class: 'btn btn-lg btn-success' %>
+  </div>
+
+<% end %>
+</div>

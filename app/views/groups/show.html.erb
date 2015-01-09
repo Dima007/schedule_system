@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Номер группы:</strong>
+  <%= @group.name %>
+</p>
+
+<p>
+  <strong>Количество студентов в группе:</strong>
+  <%= @group.size %>
+</p>
+
+<%= link_to 'Редактировть группу', edit_group_path(@group), class: "btn btn-mini btn-success" %> 
+<%= link_to 'Назад', groups_path, class: "btn btn-mini btn-default" %>

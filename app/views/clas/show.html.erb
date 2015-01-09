@@ -1,0 +1,33 @@
+<!--<p id="notice"><%= notice %></p> -->
+
+<p>
+  <strong>Преподаватель:</strong>
+  <%= @cla.professor.name %>
+</p>
+
+<p>
+  <strong>Дисциплина:</strong>
+  <%= @cla.course.name %>
+</p>
+
+<p>
+  <strong>Группы:</strong>
+  <dd> <%= @cla.groups.map(&:name).join(', ') %></dd>
+</p>
+
+<p>
+  <strong>Продолжительность занятия:</strong>
+  <%= @cla.duration %> 
+</p>
+
+<p>
+  <strong>Лабораторная?:</strong>
+  <% if @cla.lab %>
+  Да
+<%else%>
+Нет
+  <%end%>
+</p>
+
+<%= link_to 'Редактировать', edit_cla_path(@cla) ,  class: "btn btn-mini btn-primary" %> 
+<%= link_to 'Назад', clas_path,  class: "btn btn-mini btn-default" %>

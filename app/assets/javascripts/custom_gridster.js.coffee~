@@ -1,0 +1,29 @@
+$(document).ready ->
+  gridster = $(".gridster > ul").gridster({
+      widget_margins: [10, 10],
+      widget_base_dimensions: [140, 140]
+      helper: 'clone'
+      resize: 
+      	enabled: true
+      serialize_params:  ($w, wgd) ->
+         return (
+            id:  $($w).attr('id'),
+            col: wgd.col,
+            row: wgd.row,
+            size_x: wgd.size_x,
+            size_y: wgd.size_y
+      		)
+
+          
+  }).data('gridster');
+  gridData = gridster.serialize()
+  alert gridData.toSource()
+  $.ajax({
+    url:"/courseevents",
+    type: "POST",
+    data: gridData,
+    dataType: 'json'
+  });
+
+
+ 

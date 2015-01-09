@@ -1,0 +1,35 @@
+<h1>Проводимые занятия</h1>
+
+<table class = "table table-hover">
+  <thead>
+    <tr>
+      <th>Преподаватель</th>
+      <th>Дисциплина</th>
+      <th>  Группы</th>
+      <th>Продолжительность</th>
+      <th>Лабораторная?</th>
+      <!--<th>ID Групп</th> -->
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @clas.each do |cla| %>
+      <tr>
+        <td><%= cla.professor.name %></td>
+        <td><%= cla.course.name %></td>
+        <td> <dd><%= cla.groups.map(&:name).join(', ')  %></dd></td>
+        <td><%= cla.duration %></td>
+        <td><%if cla.lab %>Да<%else %>Нет<% end%></td>
+        <!--<td><%= cla.groups.map(&:id).join(', ') %></td> -->
+        <td><%= link_to 'Показать', cla ,  class: "btn btn-mini btn-default"%></td>
+        <td><%= link_to 'Редактировать', edit_cla_path(cla) ,  class: "btn btn-mini btn-success"%></td>
+        <td><%= link_to 'Удалить', cla, method: :delete, data: { confirm: 'Вы уверены?' },  class: "btn btn-mini btn-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Добавить занятие', new_cla_path,class: 'btn btn-mini btn-primary'  %>

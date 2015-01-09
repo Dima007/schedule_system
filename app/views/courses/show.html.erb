@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Название дисциплины:</strong>
+  <%= @course.name %>
+</p>
+
+<%= link_to 'Редактировать', edit_course_path(@course) %> |
+<%= link_to 'Назад', courses_path %>
