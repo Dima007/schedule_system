@@ -17,7 +17,7 @@ $(document).ready ->
           
   }).data('gridster');
   gridData = gridster.serialize()
-  alert gridData.toSource()
+  #alert gridData.toSource()
   $.ajax({
     url:"/courseevents",
     type: "POST",

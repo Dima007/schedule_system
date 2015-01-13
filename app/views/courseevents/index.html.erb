@@ -73,11 +73,7 @@
 <% end %>
 </tbody>
 </table>
-<br>
-  
 
-<br>
- 
 <%if params[:d] == "true"%>
 
 <%= link_to "Генерировать новое расписание", root_path(d: true), class: 'btn btn-large btn-default'%>
@@ -114,8 +110,10 @@
   <%  end %> 
 <%end%>
 
+<%iteratorclass = 0%>
 <% @rooms.each do |room| %>
  <h2> <%= room.name %> </h2> 
+
  <table style = "table-layout: fixed; width: 100 %" class = 'table table-hover table-bordered'><thead>
         <tr>
         <th>Понедельник</th>
@@ -139,7 +137,7 @@
 
     <% if courseevent.roomname.include? room.id.to_s %>  
           <% p cr[courseevent.coursename.to_i] %>
-        <%another[ courseevent.id ] << courseevent.meetingday << courseevent.meetingtime << courseevent.courseduration << cr[courseevent.coursename.to_i] <<  cr[courseevent.profname.to_i] << courseevent.groupname << courseevent.roomname %>
+        <%another[ courseevent.id ] << courseevent.meetingday << courseevent.meetingtime << courseevent.courseduration << cr[courseevent.coursename.to_i] <<  pr[courseevent.profname.to_i] << courseevent.groupname << courseevent.roomname %>
 
         <%h[courseevent.meetingday] << courseevent.meetingtime %>
 
@@ -148,18 +146,19 @@
             <% end %>
 <% end %>
 <!-- </ul> -->
-<% end %> 
+
 <!-- </div> -->
  
 
-<div class = "gridster">
+<div id="<%=iteratorclass%>"class = "gridster">
   <ul>
  <% for d in 1..6 %>
    <% for m in 1..12 %>
           
       <% if  h[d].include? m   %>
         <%  another.each do |key, array| %>
-         <% if array.take(2) == [d,m] and array[-1] == "37" %>
+        <%p array[-1],"   -> " ,room.id.to_s %>
+         <% if array.take(2) == [d,m] and array[-1].to_s ==room.id.to_s %>
              <li id="<%=key%>" class="gridster-cell" data-row="<%= m %>" data-col="<%= d %>" data-sizex="1" data-sizey="<%= array[2]%>"><b><%=another[key][3]%><br><%=another[key][4]%></b><br>Группы №: <%=another[key][5]%></li>
  <%end%>
 <%end%>
@@ -171,4 +170,7 @@
       <% end %>
     </ul>
 </div> 
+
+<%iteratorclass = iteratorclass + 1%>
+<% end %> 
 </div> 

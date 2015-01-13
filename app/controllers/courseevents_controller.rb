@@ -22,16 +22,16 @@ class CourseeventsController < ApplicationController
     @profsize =Professor.all.size
     @groupsize = Group.all.size
     @roomsize = Room.all.size
-    # @cbrcase = Cbrcase.select("id").find_or_initialize_by(numofcla: @clasize,  numofprof: @profsize, numofgroups: @groupsize, numofrooms: @roomsize)  #where ( "numofcla = 2
-    #      p @cbrcase.id
-    # unless @cbrcase.id.nil?
+     # @cbrcase = Cbrcase.select("id").find_or_initialize_by(numofcla: @clasize,  numofprof: @profsize, numofgroups: @groupsize, numofrooms: @roomsize)  #where ( "numofcla = 2
+     #      p @cbrcase.id
+     # unless @cbrcase.id.nil?
       
-    #      @courseevents = Courseevent.order(:id).where (["cbrcase_id = :cbrid" ,{ cbrid: @cbrcase.id.to_s}])
-    # else
-    #     #run program genetic algo
-         # @c = Schedule.new.res
+     #      @courseevents = Courseevent.order(:id).where (["cbrcase_id = :cbrid" ,{ cbrid: @cbrcase.id.to_s}])
+     # else
+     #     #run program genetic algo
+     #      @c = Schedule.new.res
          @courseevents = Courseevent.order(:id)
-    #end
+    # end
      @rooms = Room.order(:id)
      @groups = Group.order(:id)
    @courses = Course.order(:id)
@@ -61,13 +61,22 @@ class CourseeventsController < ApplicationController
   p @c
   
   render nothing: true
-  if @c != "1"
+
+
+# ActiveRecord::Base.transaction
+
+
+#   raise if @c != "1"
+# end 
+
+
+  if @c < "1"
     #callback position raise ActiveRecord::Rollback, "Call tech support!"
-    flash[:alert] = "Расписание не сохранено"
+    flash[:alert] = "Составленное расписание не удовлетворяет требованиям. Значение функции пригодности:" + @c
 
 
   else
-   flash[:notice] = "Расписание успешно сохранено" 
+   flash[:notice] = "Расписание удовлетворяет требованиям" 
    
   end
 

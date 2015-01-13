@@ -13,7 +13,7 @@ jQuery ->
   output = ""
   if typeof gr != 'undefined' 
     while r < gr.rooms.length 
-      output = output + "<h4><b>" + "Аудитория "  + gr.rooms[r].name + "</b><br>" + "Вместимость: " +gr.rooms[r].size + "</b><br>" +  gr.rooms[r].lab  + "</h4><table style = 'table-layout: fixed; width: 100 %' class = 'table table-hover table-bordered'><thead>
+      output = output + "<h4><b>" + "Аудитория "  + gr.rooms[r].name + "</b><br>" + "Вместимость: " +gr.rooms[r].size + "</b><br>" +  gr.rooms[r].lab  + "</h4><table style = 'table-layout: fixed; width: 100%' class = 'table table-hover table-bordered'><thead>
         <tr>
        
         <th>Понедельник</th>
