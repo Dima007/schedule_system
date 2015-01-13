@@ -58,7 +58,7 @@ void TestFitness::TestCalculateFitness()
   conn = PQconnectdb("dbname=gaschedule_development host=localhost user=alex password=alex");
   if (PQstatus(conn) == CONNECTION_BAD) {puts("We were unable to connect to the database");}
  
-  res = PQexec(conn,"select * from courseevents where cbrcase_id=1 order by id desc");
+  res = PQexec(conn,"select * from courseevents where cbrcase_id=1 order by id ");
   if (PQresultStatus(res) != PGRES_TUPLES_OK) { puts("We did not get any data!");}
 
   rec_count = PQntuples(res);
@@ -74,7 +74,7 @@ void TestFitness::TestCalculateFitness()
 		 char* profname =  PQgetvalue(res, row , 7) ;
 		 char* groupname =  PQgetvalue(res, row , 8) ;
              
-             cout << groupname << endl;
+            // cout << groupname << endl;
      _rms.insert( pair<int, int>( row, roomname ) );
      _days.insert( pair<int, int>( row, meetingday ) );
      _timess.insert( pair<int, int>( row, meetingtime ) );
@@ -83,7 +83,49 @@ void TestFitness::TestCalculateFitness()
    }
 
    list<StudentsGroup*> groupsevents;
-             
+
+   rescla = PQexec(conn, "select * from courseevents order by id");
+      if (PQresultStatus(rescla) != PGRES_TUPLES_OK) {puts("We did not get any data!");}
+      rec_count = PQntuples(rescla);           
+       
+
+      for (row=0; row<rec_count; row++) {
+        int claid = atoi(PQgetvalue(rescla, row , 0));
+        int pid =   atoi(PQgetvalue(rescla, row , 7));
+        int cid = atoi(PQgetvalue(rescla, row , 6));
+        int dur  = atoi(PQgetvalue(rescla, row , 5));
+        bool lab = !strcmp ( PQgetvalue(rescla, row , 2), "t" );
+      //  cout << claid  << dur << lab <<pid <<endl;
+        Professor* p = Configuration::GetInstance().GetProfessorById( pid );
+        Course* c = Configuration::GetInstance().GetCourseById( cid );
+        //cout << _groupsmap.find(row )->second << endl;
+
+        char * pch = strtok (_groupsmap.find(row )->second,"/");
+        int groups_col = 0;
+        while (pch != NULL)
+        { 
+            
+         StudentsGroup* g = Configuration::GetInstance().GetStudentsGroupById( atoi( pch ));
+             if( g ) {
+               groupsevents.push_back( g );
+             }
+    
+
+       //   cout << pch << endl;
+          pch = strtok (NULL, "/");
+          groups_col++;
+        }
+
+        CourseClass* cc = new CourseClass( p, c, groupsevents, lab, dur );
+        if( cc ) 
+          _courseClassesTest.push_back( cc );
+        groupsevents.clear();
+      }
+      PQclear(res);
+      PQclear(rescla);
+      PQfinish(conn);   
+
+/*    //unfixed test function             
       rescla = PQexec(conn, "select * from clas order by id");
       if (PQresultStatus(rescla) != PGRES_TUPLES_OK) {puts("We did not get any data!");}
       rec_count = PQntuples(rescla);           
@@ -126,5 +168,6 @@ void TestFitness::TestCalculateFitness()
       PQclear(res);
       PQclear(rescla);
       PQfinish(conn);   
+      */
 }
   

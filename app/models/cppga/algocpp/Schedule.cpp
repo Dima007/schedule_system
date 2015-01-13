@@ -131,8 +131,8 @@ void Schedule::TestCorrection() const
 	Schedule* newChromosome = new Schedule( *this, true );
 	//wrong?!?
 	//add groups from db
-	//const list<CourseClass*>& d = TestFitness::GetInstance().GetCourseClassesTest();
-	const list<CourseClass*>& d = Configuration::GetInstance().GetCourseClasses();
+	const list<CourseClass*>& d = TestFitness::GetInstance().GetCourseClassesTest();
+	//const list<CourseClass*>& d = Configuration::GetInstance().GetCourseClasses();
 
 	int a = 0;
 	 
@@ -146,6 +146,7 @@ void Schedule::TestCorrection() const
         int timeS = TestFitness::GetInstance().getTimess(a) - 1;
      	int pos = day * nr * DAY_HOURS + room * DAY_HOURS + timeS;
  	 
+ 	 	//cout << "d-" << day << "t-" << timeS  << endl;
 		// fill time-space slots, for each hour of class
 		for( int i = dur - 1; i >= 0; i-- )
 			newChromosome->_slots.at( pos + i ).push_back( *it );
