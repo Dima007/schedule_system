@@ -6,6 +6,9 @@ jQuery ->
   str = $('.courseevents_class').data()
   gr = $('.rooms_class').data() 
   g = $('.groups_class').data()
+  pr = $('.professors_class').data() 
+  cr = $('.courses_class').data()
+  
   r= 0
   output = ""
   if typeof gr != 'undefined' 
@@ -45,12 +48,36 @@ jQuery ->
             asd++  
         it++
 
+      courses = []
+      itt = 0
+    
+      while itt < str.courseevents.length
+        if "#{str.courseevents[itt].roomname}" == "#{gr.rooms[r].id}"          
+          ddas = 0
+          while ddas < cr.courses.length
+            if "#{cr.courses[ddas].id}" == "#{str.courseevents[itt].coursename}"
+              courses[itt] = cr.courses[ddas].name
+            ddas++
+         
+        itt++
+
+      professors= []
+      tt = 0
+      while tt < str.courseevents.length
+        if "#{str.courseevents[tt].roomname}" == "#{gr.rooms[r].id}"          
+          dd = 0
+          while dd < pr.professors.length
+            if "#{pr.professors[dd].id}" == "#{str.courseevents[tt].profname}"
+              professors[tt] = pr.professors[dd].name
+            dd++
+        tt++
+
 
       while i < str.courseevents.length
         tmp = str.courseevents[i].meetingday + 6* (str.courseevents[i].meetingtime - 1) - 1
 
         if "#{str.courseevents[i].roomname}" == "#{gr.rooms[r].id}"
-          val.splice tmp, 1,"<td class='success'>#" +str.courseevents[i].meetingtime + "#<br>Продолжительность: "+str.courseevents[i].courseduration + "<br><b>"+str.courseevents[i].coursename  + "</b><br><b>"+str.courseevents[i].profname + "</b><br>Группы:<br>"+  courseGroups[i].join("/") + "</td>"
+          val.splice tmp, 1,"<td class='success'>#" +str.courseevents[i].meetingtime + "#<br>Продолжительность: "+str.courseevents[i].courseduration + "<br><b>"+ courses[i]  + "</b><br><b>"+ professors[i] + "</b><br>Группы:<br>"+  courseGroups[i].join("/") + "</td>"
           
         i++
       

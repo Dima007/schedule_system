@@ -149,9 +149,9 @@ void CChildView::Printer(int icase)
 		  		s2SQL.append("', '");
 		 		s2SQL.append( std::to_string(c->GetDuration()).c_str() );
 		 		s2SQL.append("', '");
-			 	s2SQL.append( c->GetCourse().GetName().c_str());
+			 	s2SQL.append( std::to_string(c->GetCourse().GetId()).c_str());
 				s2SQL.append("', '");
-				s2SQL.append(  c->GetProfessor().GetName().c_str() );
+				s2SQL.append(  std::to_string(c->GetProfessor().GetId()).c_str() );
 				s2SQL.append("', '");		
 
 				string str;	 

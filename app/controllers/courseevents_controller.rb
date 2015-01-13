@@ -33,7 +33,10 @@ class CourseeventsController < ApplicationController
     #end
      @rooms = Room.order(:id)
      @groups = Group.order(:id)
+   @courses = Course.order(:id)
+     @professors = Professor.order(:id)
  
+
       end
  end
 

@@ -12,6 +12,9 @@
       <%h = Hash.new { |h,k| h[k] = []}%>
  
   <%another = Hash.new { |d,c| d[c] = []}%>
+
+  <%cr = Hash.new { |dd,cc| }%>
+  <%pr = Hash.new { |dd,cc| }%>
  <!-- 
 <table class="table table-bordered">
   <thead>
@@ -62,6 +65,12 @@
 <% end %>
 <%= content_tag :div, class: "groups_class", data: {groups: @groups} do %>
 <% end %>
+
+<%= content_tag :div, class: "professors_class", data: {professors: @professors} do %>
+<% end %>
+
+<%= content_tag :div, class: "courses_class", data: {courses: @courses} do %>
+<% end %>
 </tbody>
 </table>
 <br>
@@ -91,6 +100,18 @@
 
 
  
+   <% @courses.each do |course| %>
+   <%p course.id%>
+  <%  cr[course.id]=course.name%>
+  <%  end %> 
+
+
+   <% @professors.each do |professor| %>
+   <%p professor.id%>
+  <%  pr[professor.id] = professor.name%>
+  <%  end %> 
+
+
 <% @rooms.each do |room| %>
  <h2> <%= room.name %> </h2> 
  <table style = "table-layout: fixed; width: 100 %" class = 'table table-hover table-bordered'><thead>
@@ -108,15 +129,21 @@
 <!--
 <div class="gridster">
     <ul> --> 
+     
+          
+                
+
       <% @courseevents.each do |courseevent| %>
 
     <% if courseevent.roomname.include? room.id.to_s %>  
-        <%another[ courseevent.id ] << courseevent.meetingday << courseevent.meetingtime << courseevent.courseduration << courseevent.coursename  <<  courseevent.profname << courseevent.groupname << courseevent.roomname %>
+          <% p cr[courseevent.coursename.to_i] %>
+        <%another[ courseevent.id ] << courseevent.meetingday << courseevent.meetingtime << courseevent.courseduration << cr[courseevent.coursename.to_i] <<  cr[courseevent.profname.to_i] << courseevent.groupname << courseevent.roomname %>
 
         <%h[courseevent.meetingday] << courseevent.meetingtime %>
 
-        <% p courseevent.roomname%>
-           <% end %>      
+       
+      
+            <% end %>
 <% end %>
 <!-- </ul> -->
 <% end %> 
