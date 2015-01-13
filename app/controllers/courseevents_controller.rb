@@ -7,7 +7,8 @@ class CourseeventsController < ApplicationController
       
      @rooms = Room.order(:id)
      @groups = Group.order(:id)
- 
+  @courses = Course.order(:id)
+     @professors = Professor.order(:id)
     #end
      else
   	#c = Algorithm.new
@@ -61,6 +62,7 @@ class CourseeventsController < ApplicationController
   
   render nothing: true
   if @c != "1"
+    #callback position raise ActiveRecord::Rollback, "Call tech support!"
     flash[:alert] = "Расписание не сохранено"
 
 

@@ -85,6 +85,8 @@
 <%else%>
   
   <input type='button' id='hideshow' class='btn btn-large btn-primary' value='Корректировать расписание'>
+
+ <%= link_to "Удалить расписание", root_path(d: true), class: 'btn btn-large btn-danger'%>
  
  <%= link_to "Генерировать новое расписание", root_path(d: true), class: 'btn btn-large btn-default'%>
 
@@ -99,7 +101,7 @@
  --> <button class='btn btn-large btn-success' id='save_gridster_data'>Сохранить расписание</button>
 
 
- 
+ <% unless @courses.nil? and @professors.nil? %>
    <% @courses.each do |course| %>
    <%p course.id%>
   <%  cr[course.id]=course.name%>
@@ -110,7 +112,7 @@
    <%p professor.id%>
   <%  pr[professor.id] = professor.name%>
   <%  end %> 
-
+<%end%>
 
 <% @rooms.each do |room| %>
  <h2> <%= room.name %> </h2> 
