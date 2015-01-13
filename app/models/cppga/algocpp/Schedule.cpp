@@ -282,7 +282,8 @@ void Schedule::Mutation()
 
 // Calculates fitness value of chromosome
 void Schedule::CalculateFitness(int t)
-{
+{	
+	
 	// chromosome's score
 	int score = 0;
 	int numberOfRooms = Configuration::GetInstance().GetNumberOfRooms();
@@ -381,13 +382,13 @@ total_overlap:
 	}
 
 	if ((float)score / ( Configuration::GetInstance().GetNumberOfCourseClasses() *5) >= 1) {
-	 	//cout << "success" << endl;
+	 	cout << "success" << endl;
 	 	ci = 0;
 	 	int aa = 0;
 	 	
 	 	for(  map<CourseClass*, int>::const_iterator it = _classes.begin(); it != _classes.end(); ++it, ci += 6, aa++ ) 
 	 	{
-	 	//	cout << ci << "cilast" << endl;
+	 		cout << ci << "cilast" << endl;
 	 		int p = ( *it ).second;
 	 		int day = p / daySize; 
 	 		int timeS = p % daySize;
@@ -405,6 +406,7 @@ total_overlap:
 			}
 		}
 		bool windows = false;
+		score  = Configuration::GetInstance().GetNumberOfCourseClasses() *6;
 	    for (int q = 0; q < 6  ; q++) {
 	    	bool gp = false;
 	    	
@@ -418,37 +420,38 @@ total_overlap:
        	 				auto tmp = iter;
           				auto tmp2 = ++iter;
           				if (  tmp->first + tmp->second  != tmp2->first ) {
-             				 score--;
+             				score--;
              			}	
              			else 
              			{
-             				score++;
+             				//score++;
              				 
 							 
             			}
             			iter --;
             		}
             	} 
-     //        	else if (mymap[q][g].size() == 1) 
-     //        	{
+           	else if (mymap[q][g].size() == 1) 
+             	{
 
-					// if( !gp) 
-					// 	gp = true;
 					
-					// //score++; 
+							 
+					 		 //score++;
+
 
 					// cout  << "-sc" << endl;
 					// //_criteria[ ci + 5 ] = !gp;
             		
-     //        	}
-            }
-             // if (gp)
-             // 	score++;
+             	}
+            } 
+            //if (gp)
+            //	score++;
         }
     }  	 
     //cout << score << "itog"<<endl;
    // cout << ( Configuration::GetInstance().GetNumberOfCourseClasses() *6) << endl;
 	// calculate fitess value based on score
+	cout << score << "->" <<Configuration::GetInstance().GetNumberOfCourseClasses() *6 << endl;
 	_fitness = (float)score / ( Configuration::GetInstance().GetNumberOfCourseClasses() *6);// * 5// DAYS_NUM );
 }
 
