@@ -6,6 +6,6 @@
   <br>rake db:migrate
   <br>rake db:setup
   <br> cd app/model/cppga/algocpp/ && make Makefile
-  <br> Change routes in app/controller/courseevents_controller.rb to yours 
+  <br> Change routes in app/mdel/schedule.rb to yours and start server:
   <br>  rails s
   
